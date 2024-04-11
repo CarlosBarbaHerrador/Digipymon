@@ -81,13 +81,14 @@ def combate(Enemigo):
     print("Te has encontrado con", nombre_aleatorio_entrenador , "!!!\n" "Tiene: ", enemigo.cantidad_digipymon , " digipymons")
     
     peleita = str(input("¿Estas seguro de querer combatir? Si/No"))
+    print("Si evitas la pelea perderas 1 Digicoins")
     pelea = peleita.lower()
     if pelea == si:
         pass
     elif pelea == no:
         print("Te has escondido para que el entrenador no te vea!!")
+        print("Al esconderte se te ha caido una moneda al suelo!!")
         print("Que cobarde ereeeesss!!!🐓🐓")
-
         jugador.digicoins - 1
 
 
