@@ -4,15 +4,18 @@ from Jugador import Jugador
 from Enemigo import Enemigo
 from Inventario import Inventario
 from Digipymon import Digipymon
+lista = ListaNombres()
+enemigo = Enemigo()
+jugador = Jugador()
+inventario = Inventario()
 
-# Función para generar un Digipymon aleatorio
+#TODO FUNCION PARA GENERAR UN DIGIPYMON ALEATORIO
 def generar_digipymon_aleatorio():
     #Genera el tipo del digipymon de manera aleatoria del array
     tipos = ["Planta", "Fuego", "Agua"]
     tipo_seleccionado = random.choice(tipos)
     
     # Genera un nombre aleatorio proveniente de la clase ListaNombres
-    lista = ListaNombres()
     nombre_aleatorio = lista.obtener_nombre_digipymon()
     
     #Genera estadisticas aleatorias (Vida,Ataque,Nivel)
@@ -22,16 +25,15 @@ def generar_digipymon_aleatorio():
     
     #Selecciona los parametros
     digipymon = Digipymon(nombre_aleatorio, numero_aleatorio_vida, numero_aleatorio_ataque, numero_aleatorio_nivel, tipo_seleccionado)
-    
     return digipymon
 
-# Función para mostrar el menú y obtener la opción del jugador
+#TODO FUNCION PARA GENERAR MENU
 def menu():
     print(f"1. Buscar Digipymon \n2. Luchar contra un entrenador \n3. Ir a la tienda \n4. Usar objetos \n5. Consultar inventario \n6. Consultar digipymons \n7. Salir")
     operacion = int(input())
     return operacion
 
-# Función para buscar un Digipymon
+#TODO FUNCION PARA BUSCAR DIGIPYMON
 def buscar_digipymon(jugador, inventario):
     
     digipymon_encontrado = generar_digipymon_aleatorio()
@@ -59,21 +61,41 @@ def buscar_digipymon(jugador, inventario):
         else:
             print("El Digipymon ha escapado.")
             inventario.objetos["balls"] -= 1
+    # Si tienes mas de 6 digipymons no te dejará
     elif jugador.cantidad_digipymon >= 6:
         print("Ya tienes 6 digipymons!!")
             
     elif inventario.objetos['balls'] <= 0:
         print("No tienes bolas jaja")
-        
+     
     else:
-        # !maybe añadir algo
+        print("Has huido del Combate!! Un poco cobarde por tu parte 🐓🐓🐓")
+
+#TODO FUNCION COMBATE
+def combate(Enemigo):
+    # genera un nombre aleatorio del entrenador enemigo
+    nombre_aleatorio_entrenador = lista.obtener_nombre_entrenador()
+    
+    #Iguala la cantidad ded sus digipymons a los tuyos 
+    enemigo.cantidad_digipymon = jugador.cantidad_digipymon
+    print("Te has encontrado con", nombre_aleatorio_entrenador , "!!!\n" "Tiene: ", enemigo.cantidad_digipymon , " digipymons")
+    
+    peleita = str(input("¿Estas seguro de querer combatir? Si/No"))
+    pelea = peleita.lower()
+    if pelea == si:
         pass
+    elif pelea == no:
+        print("Te has escondido para que el entrenador no te vea!!")
+        print("Que cobarde ereeeesss!!!🐓🐓")
+
+        jugador.digicoins - 1
+
 
 # Función principal del juego
 def Main():
-    jugador = Jugador()
-    inventario = Inventario()
-    # Añade "pokeballs"
+
+    
+    # ! Añade "balls"
     inventario.añadir_objeto("balls", 5)
    
     #! Enseña las balls retirar esto al final del codigo
@@ -81,7 +103,7 @@ def Main():
     
     
     while True:
-        print(jugador.cantidad_digipymon)
+
         opcion = menu()
         
         if opcion == 1:
@@ -89,6 +111,7 @@ def Main():
             buscar_digipymon(jugador, inventario)
         elif opcion == 2:
             # Luchar contra un entrenador
+            combate(Enemigo)
             pass
         elif opcion == 3:
             # Ir a la tienda
@@ -101,7 +124,8 @@ def Main():
             pass
         elif opcion == 6:
             # Consultar digipymons
-            pass
+            print("Tienes un total de:", jugador.cantidad_digipymon , "Digipymons\n")
+            
         elif opcion == 7:
             # Salir
             break
