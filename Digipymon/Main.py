@@ -9,6 +9,7 @@ enemigo = Enemigo()
 jugador = Jugador()
 inventario = Inventario()
 
+
 #TODO FUNCION PARA GENERAR UN DIGIPYMON ALEATORIO
 def generar_digipymon_aleatorio():
     #Genera el tipo del digipymon de manera aleatoria del array
@@ -25,6 +26,7 @@ def generar_digipymon_aleatorio():
     
     #Selecciona los parametros
     digipymon = Digipymon(nombre_aleatorio, numero_aleatorio_vida, numero_aleatorio_ataque, numero_aleatorio_nivel, tipo_seleccionado)
+    
     return digipymon
 
 #TODO FUNCION PARA GENERAR MENU
@@ -66,7 +68,7 @@ def buscar_digipymon(jugador, inventario):
         print("Ya tienes 6 digipymons!!")
             
     elif inventario.objetos['balls'] <= 0:
-        print("No tienes bolas jaja")
+        print("No tienes bolas jaja\n")
      
     else:
         print("Has huido del Combate!! Un poco cobarde por tu parte 🐓🐓🐓")
@@ -75,44 +77,53 @@ def buscar_digipymon(jugador, inventario):
 def combate(Enemigo):
     # genera un nombre aleatorio del entrenador enemigo
     nombre_aleatorio_entrenador = lista.obtener_nombre_entrenador()
+
     
-    #Iguala la cantidad ded sus digipymons a los tuyos 
-    enemigo.cantidad_digipymon = jugador.cantidad_digipymon
-    print("Te has encontrado con", nombre_aleatorio_entrenador , "!!!\n" "Tiene: ", enemigo.cantidad_digipymon , " digipymons")
-    
-    peleita = str(input("¿Estas seguro de querer combatir? Si/No"))
-    print("Si evitas la pelea perderas 1 Digicoins")
+    peleita = str(input("¿Estas seguro de querer combatir? Si/No\n"))
     pelea = peleita.lower()
-    if pelea == si:
+    print("Si evitas la pelea perderas 1 Digicoins")
+    
+    if pelea == "si":
+        
+        # Bucle para agregar los Digipymons del jugador al enemigo
+        for _ in range(jugador.cantidad_digipymon):
+            digipymon_entrenador = generar_digipymon_aleatorio()
+            enemigo.añadir_digipymon(digipymon_entrenador)
+
+        print("Te has encontrado con", nombre_aleatorio_entrenador , "!!!\n" "Tiene: ", enemigo.cantidad_digipymon , " digipymons")
+    
         pass
-    elif pelea == no:
+    
+    elif pelea == "no":
         print("Te has escondido para que el entrenador no te vea!!")
         print("Al esconderte se te ha caido una moneda al suelo!!")
         print("Que cobarde ereeeesss!!!🐓🐓")
         jugador.digicoins - 1
 
+    
 
 # Función principal del juego
 def Main():
 
-    
-    # ! Añade "balls"
-    inventario.añadir_objeto("balls", 5)
+    #! Añade "balls"
+    inventario.añadir_objeto("balls",5)
    
     #! Enseña las balls retirar esto al final del codigo
     print(inventario.objetos['balls'])
     
     
     while True:
-
-        opcion = menu()
         
+        opcion = menu()
+        print(enemigo.cantidad_digipymon)
         if opcion == 1:
+            
             # Buscar Digipymon
             buscar_digipymon(jugador, inventario)
+            
         elif opcion == 2:
             # Luchar contra un entrenador
-            combate(Enemigo)
+            combate(enemigo)
             pass
         elif opcion == 3:
             # Ir a la tienda
@@ -126,6 +137,8 @@ def Main():
         elif opcion == 6:
             # Consultar digipymons
             print("Tienes un total de:", jugador.cantidad_digipymon , "Digipymons\n")
+            for i in jugador.lista_digipymon:
+                print(i)
             
         elif opcion == 7:
             # Salir

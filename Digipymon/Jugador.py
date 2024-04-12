@@ -1,4 +1,5 @@
 class Jugador:
+    
     def __init__(self, nombre, genero):
         self.nombre = nombre
         self.genero = genero
@@ -12,6 +13,7 @@ class Jugador:
         self.cantidad_digipymon += 1  # Aumentar la cantidad de Digimon en 1
         
     def consultar_digipymon(self, lista_digipymon):
+        
         print(lista_digipymon)
         
     def consultar_digicoins(self, digicoins):

@@ -1,5 +1,5 @@
 class Enemigo:
-    def __init__(self, nombre, lista_digipymon ):
+    def __init__(self, nombre ):
         self.nombre = nombre
         
     def __init__(self):
