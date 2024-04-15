@@ -9,7 +9,7 @@ class Digipymon:
 
     
     def __str__(self):
-        return f"Nombre: {self.nombre}\n Vida: {self.vida}\n Ataque: {self.ataque}\n Nivel: {self.nivel}\n Tipo: {self.tipo}"
+        return f"Nombre: {self.nombre}\n Vida: {self.vida}\n Ataque: {self.ataque}\n Nivel: {self.nivel}\n Tipo: {self.tipo}\n"
     
     def obtener_vida(self):
         return self.vida

@@ -3,17 +3,21 @@ class ListaNombres:
     def __init__(self):
         self.lista_nombre_digipymon = ["Antoniopymon", "Paupymon", "Estebanpymon", "Alexpymon", "Becapymon", "Charpymon", "Bulbapymon", "Squirtlepymon", "Pikapymon", "Jigglypuffpymon", "Geodudepymon", "Eeveepymon", "Snorlaxpymon", "Psyduckpymon", "Gengarpymon", "Lucariopymon", "Mewtwopymon", "Torchicpymon", "Mudkipymon", "Pipluppymon", "Chimcharpymon", "Turtwigpymon", "Treeckopymon", "Torchpymon", "Mudpymon", "Leafeonpymon", "Glaceonpymon", "Vaporeonpymon", "Jolteonpymon", "Flareonpymon", "Sylveonpymon", "Espeopymon", "Umbreopymon", "Jolteopymon", "Glacpymon", "Flareopymon", "Sylveopymon", "Espypymon", "Umbrepymon", "Joltapymon", "Glacipymon", "Flarepymon", "Sylveepymon", "Espypymon", "Umbreonpymon", "Garchompymon", "Rayquazapymon", "Kyogrepymon", "Groudopymon", "Dialgapymon"]
         self.lista_nombre_entrenador = [
-        "Pedro", "Antonio", "Juan", "María", "Luis", "Ana", "Carlos", "Laura", "Miguel", "Elena", "Sara", "David", 
-        "Isabel", "Javier", "Sofía", "Daniel", "Lucía", "Fernando", "Carmen", "Diego", "Patricia", "Manuel", 
-        "Rosa", "José", "Marta", "Jorge", "Paula", "Pablo", "Eva", "Francisco", "Silvia", "Álvaro", "Natalia", 
-        "Raúl", "Cristina", "Rubén", "Beatriz", "Iván", "Mercedes", "Adrián", "Nerea", "Alejandro", "Victoria", 
-        "Alberto", "Verónica", "Ricardo", "Clara", "Guillermo", "Celia", "Andrés", "Lorena", "Oscar", "Nuria", 
-        "Rafael", "Marina", "Josué", "Paulina", "Emilio", "Irene", "Hugo", "Diana", "Gonzalo", "Cristina", 
-        "Santiago", "Angela", "Enrique", "Teresa", "Alfonso", "Carolina", "Félix", "Alicia", "Mario", "Inés", 
-        "Víctor", "Beatriz", "Ramón", "Patricia", "Ignacio", "Clara", "Bruno", "Gisela", "Simón", "Paulina", 
-        "Mateo", "Marisol", "Diego", "Noelia", "Sergio", "Esther", "Juan Pablo", "Elisa", "Paco", "Valentina", 
-        "Jesús", "Ingrid", "Fernando", "Bárbara", "Roberto", "Miriam", "Rafael", "Alejandra", "Joaquín", "Rocio"
-        ]
+            "Walter White", "Tony Stark", "Dexter Morgan", "Daenerys Targaryen", "Michael Scott", "Buffy Summers",
+            "Sherlock Holmes", "Eleven Byers", "Jack Sparrow", "Leia Organa", "Bruce Wayne", "Rick Grimes",
+            "Hermione Granger", "Jon Snow", "Ellen Ripley", "Frodo Baggins", "Luke Skywalker", "Albus Dumbledore",
+            "Carrie Bradshaw", "Lisbeth Salander", "Peter Parker", "Katniss Everdeen", "Rick Sanchez",
+            "Marty McFly", "Jesse Pinkman", "Cersei Lannister", "Dr. Strange", "Sarah Connor", "Indiana Jones",
+            "Negan Smith", "Sansa Stark", "Ellen Ripley", "Maggie Greene", "Tony Stark", "Arya Stark",
+            "James Bond", "Holly Golightly", "Gandalf Grey", "Princess Leia", "Hannibal Lecter", "Clarice Starling",
+            "Jack Sparrow", "Bella Swan", "Harvey Specter", "Cersei Lannister", "Doctor Who", "Wendy Torrance",
+            "Jim Halpert", "Lucy Ricardo", "Danny Zuko", "Nancy Wheeler", "Tyrion Lannister", "Juno MacGuff",
+            "Sheldon Cooper", "Bruce Wayne", "Jack Dawson", "Skyler White", "Juno MacGuff", "Maggie Greene",
+            "Ted Mosby", "Olivia Pope", "Gandalf Grey", "Rose DeWitt Bukater", "Mike Ross", "Holly Golightly",
+            "Indiana Jones", "Jon Snow", "Bruce Wayne", "Eleven Byers", "Marty McFly", "Daenerys Targaryen",
+            "Phil Dunphy", "Rose DeWitt Bukater"]
+
+
     
     def obtener_nombre_digipymon(self):
         return random.choice(self.lista_nombre_digipymon)
