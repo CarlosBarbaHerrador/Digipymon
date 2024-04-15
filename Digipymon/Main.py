@@ -108,7 +108,8 @@ def combate(jugador, enemigo):
         for _ in range(jugador.cantidad_digipymon):
             digipymon_entrenador = generar_digipymon_aleatorio()
             enemigo.añadir_digipymon(digipymon_entrenador)
-            
+     
+
         if jugador.cantidad_digipymon == 0:
             print("No tienes Digipymons para combatir.")
             
@@ -139,17 +140,19 @@ def combate(jugador, enemigo):
                     diferencia_ataque = digipymon_enemigo.ataque - digipymon_jugador.ataque
                     digipymon_jugador.vida -= diferencia_ataque
                     ronda_perdida += 1 
+                    enemigo.lista_digipymon.remove(digipymon_enemigo)
                     if digipymon_jugador.vida <= 0:
-                        print("¡Tu Digipymon ha sido derrotado!")
+                        print("¡Tu Digipymon ha sido derrotado!(Debilitado)")
                         jugador.lista_digipymon.remove(digipymon_jugador)
                         jugador.cantidad_digipymon -= 1
-                        ronda_perdida += 1
+                        
                 else:
                     # Empate, ambos Digipymons pierden vida
                     print("¡El combate ha terminado en empate!")
                     diferencia_ataque = 0  # No hay diferencia de ataque en caso de empate
                     digipymon_jugador.vida -= diferencia_ataque
                     digipymon_enemigo.vida -= diferencia_ataque
+                    enemigo.lista_digipymon.remove(digipymon_enemigo)
                     
                     if digipymon_jugador.vida <= 0:
                         print("¡Tu Digipymon ha sido derrotado!")
@@ -253,7 +256,7 @@ def digishop(jugador, inventario):
             print("¡No tienes suficientes digicoins para comprar Anabolizantes!")
     else:
         print("Selección no válida. Por favor, elige '1', '2' o '3'.")
-
+#! Revisa todo esto por si cambio algo o hay algo inutil ⬇⬇⬇
 #TODO ===============================  FUNCION USAR OBJETO  ==========================================
 def usar_item(jugador, inventario):
     # Muestra el inventario
@@ -273,7 +276,7 @@ def usar_item(jugador, inventario):
             print("Digipymons disponibles:")
             
             for i, digipymon in enumerate(jugador.lista_digipymon):
-                print(f"{i+1}. {digipymon.nombre}")
+                print(f"{i+1}. {digipymon.nombre},vida: {digipymon.vida}")
             # Pide al jugador que elija un Digipymon
             seleccion_digipymon = int(input("Elige el número del Digipymon al que deseas aplicar la poción: ")) - 1
             
@@ -300,7 +303,7 @@ def usar_item(jugador, inventario):
             print("Digipymons disponibles:")
             
             for i, digipymon in enumerate(jugador.lista_digipymon):
-                print(f"{i+1}. {digipymon.nombre}")
+                print(f"{i+1}. {digipymon.nombre},Ataque: {digipymon.ataque}")
             # Pide al jugador que elija un Digipymon
             seleccion_digipymon = int(input("Elige el número del Digipymon al que deseas aplicar los anabolizantes: ")) - 1
             
