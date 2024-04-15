@@ -124,7 +124,7 @@ def combate(jugador, enemigo):
                     # El jugador gana el combate
                     print("¡Tu Digipymon ha ganado el combate!")
                     diferencia_ataque = digipymon_jugador.ataque - digipymon_enemigo.ataque
-                    digipymon_enemigo.vida -= diferencia_ataque
+                    enemigo.lista_digipymon.remove(digipymon_enemigo)
                     ronda_ganada += 1
                     
                     if digipymon_enemigo.vida <= 0:
@@ -240,7 +240,7 @@ def digishop(jugador, inventario):
     elif seleccion == '2':
         if jugador.digicoins >= 3:
             jugador.digicoins -= 3
-            inventario.añadir_objeto("poción", 1)
+            inventario.añadir_objeto("pocion", 1)
             print("¡Has comprado una Poción! Por 3 Digicoins.")
         else:
             print("¡No tienes suficientes digicoins para comprar una Poción!")
@@ -256,37 +256,69 @@ def digishop(jugador, inventario):
 
 #TODO ===============================  FUNCION USAR OBJETO  ==========================================
 def usar_item(jugador, inventario):
-    inv = str(inventario.objetos)
+    # Muestra el inventario
     print("--------INVENTARIO--------")
-    print(inv.replace("{"," ").replace("}"," ").replace(",","\n").replace("'"," "))
+    for objeto, cantidad in inventario.objetos.items():
+        print(f"{objeto}: {cantidad}")
     print("--------------------------")
     
-    # Obtener la selección del jugador
-    seleccion = input("¿Qué ítem deseas usar?  ").capitalize()
+    # Pregunta al jugador qué ítem desea usar
+    seleccion = input("¿Qué ítem deseas usar? ").capitalize()
     
-    # Comprobar si el jugador tiene el ítem seleccionado
-    if seleccion == "pocion":
-        if inventario.objetos.get("poción", 0) > 0:
-            # Usar la poción para aumentar la vida del primer Digipymon en 10 puntos
-            jugador.lista_digipymon[0].vida += 10
-            # Reducir en 1 la cantidad de pociones en el inventario
-            inventario.objetos["pocion"] -= 1
-            print("¡Has usado una Poción! La vida de tu Digipymon se ha aumentado en 10 puntos.")
+    # Verifica si el ítem seleccionado está en el inventario y realiza la acción correspondiente
+    if seleccion == "Pocion":
+        if "pocion" in inventario.objetos and inventario.objetos["pocion"] > 0:
+            
+            # Muestra los Digipymons disponibles
+            print("Digipymons disponibles:")
+            
+            for i, digipymon in enumerate(jugador.lista_digipymon):
+                print(f"{i+1}. {digipymon.nombre}")
+            # Pide al jugador que elija un Digipymon
+            seleccion_digipymon = int(input("Elige el número del Digipymon al que deseas aplicar la poción: ")) - 1
+            
+            if 0 <= seleccion_digipymon < len(jugador.lista_digipymon):
+                
+                # Aumenta la vida del Digipymon seleccionado en 10 puntos
+                jugador.lista_digipymon[seleccion_digipymon].vida += 10
+                
+                # Reduce en 1 la cantidad de pociones en el inventario
+                inventario.objetos["pocion"] -= 1
+                print("¡Has usado una Poción! La vida de", jugador.lista_digipymon[seleccion_digipymon].nombre, "se ha aumentado en 10 puntos.")
+                
+            else:
+                print("¡Número de Digipymon no válido!")
+                
         else:
             print("¡No tienes pociones en tu inventario!")
+            
     elif seleccion == "Anabolizantes":
-        if inventario.objetos.get("Anabolizantes", 0) > 0:
-            # Usar los anabolizantes para aumentar el ataque del primer Digipymon en 5 puntos
-            jugador.lista_digipymon[0].ataque += 5
-            # Reducir en 1 la cantidad de anabolizantes en el inventario
-            inventario.objetos["Anabolizantes"] -= 1
-            print("¡Has usado Anabolizantes! El ataque de tu Digipymon se ha aumentado en 5 puntos.")
+        
+        if "anabolizantes" in inventario.objetos and inventario.objetos["anabolizantes"] > 0:
+            
+            # Muestra los Digipymons disponibles
+            print("Digipymons disponibles:")
+            
+            for i, digipymon in enumerate(jugador.lista_digipymon):
+                print(f"{i+1}. {digipymon.nombre}")
+            # Pide al jugador que elija un Digipymon
+            seleccion_digipymon = int(input("Elige el número del Digipymon al que deseas aplicar los anabolizantes: ")) - 1
+            
+            if 0 <= seleccion_digipymon < len(jugador.lista_digipymon):
+                
+                # Aumenta el ataque del Digipymon seleccionado en 5 puntos
+                jugador.lista_digipymon[seleccion_digipymon].ataque += 5
+                
+                # Reduce en 1 la cantidad de anabolizantes en el inventario
+                inventario.objetos["anabolizantes"] -= 1
+                print("¡Has usado Anabolizantes! El ataque de", jugador.lista_digipymon[seleccion_digipymon].nombre, "se ha aumentado en 5 puntos.")
+            else:
+                print("¡Número de Digipymon no válido!")
         else:
             print("¡No tienes Anabolizantes en tu inventario!")
-    elif seleccion == "Digipyballs":
-        print("¡No puedes usar Digipyballs en combate!")
     else:
-        print("¡Ítem no válido!")
+        print("¡Ítem no válido o no disponible en tu inventario!")
+
 
    
 
@@ -294,9 +326,9 @@ def usar_item(jugador, inventario):
 #? ====================COSAS GUARDADAS POR SI LAS USO==================
 #? jugador.lista_digipymon[0].vida += 10    #Restaura 10 puntos de vida al primer Digipymon
 #? jugador.lista_digipymon[0].ataque += 5  # Aumenta 5 puntos de ataque al primer Digipymon
-#? ====================================================================
+#? ====================================================================S
 
-# Función principal del juego
+#TODO ==================================  FUNCION MAIN  =============================================
 def Main():
 
     #! Añade "balls"
