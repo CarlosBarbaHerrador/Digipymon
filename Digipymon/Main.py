@@ -254,8 +254,41 @@ def digishop(jugador, inventario):
     else:
         print("Selección no válida. Por favor, elige '1', '2' o '3'.")
 
-
+#TODO ===============================  FUNCION USAR OBJETO  ==========================================
+def usar_item(jugador, inventario):
+    inv = str(inventario.objetos)
+    print("--------INVENTARIO--------")
+    print(inv.replace("{"," ").replace("}"," ").replace(",","\n").replace("'"," "))
+    print("--------------------------")
     
+    # Obtener la selección del jugador
+    seleccion = input("¿Qué ítem deseas usar?  ").capitalize()
+    
+    # Comprobar si el jugador tiene el ítem seleccionado
+    if seleccion == "pocion":
+        if inventario.objetos.get("poción", 0) > 0:
+            # Usar la poción para aumentar la vida del primer Digipymon en 10 puntos
+            jugador.lista_digipymon[0].vida += 10
+            # Reducir en 1 la cantidad de pociones en el inventario
+            inventario.objetos["pocion"] -= 1
+            print("¡Has usado una Poción! La vida de tu Digipymon se ha aumentado en 10 puntos.")
+        else:
+            print("¡No tienes pociones en tu inventario!")
+    elif seleccion == "Anabolizantes":
+        if inventario.objetos.get("Anabolizantes", 0) > 0:
+            # Usar los anabolizantes para aumentar el ataque del primer Digipymon en 5 puntos
+            jugador.lista_digipymon[0].ataque += 5
+            # Reducir en 1 la cantidad de anabolizantes en el inventario
+            inventario.objetos["Anabolizantes"] -= 1
+            print("¡Has usado Anabolizantes! El ataque de tu Digipymon se ha aumentado en 5 puntos.")
+        else:
+            print("¡No tienes Anabolizantes en tu inventario!")
+    elif seleccion == "Digipyballs":
+        print("¡No puedes usar Digipyballs en combate!")
+    else:
+        print("¡Ítem no válido!")
+
+   
 
     
 #? ====================COSAS GUARDADAS POR SI LAS USO==================
@@ -295,6 +328,7 @@ def Main():
             pass
         elif opcion == 4:
             # Usar objetos
+            usar_item(jugador, inventario)
             pass
         elif opcion == 5:
             # Consultar inventario
