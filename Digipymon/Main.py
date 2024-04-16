@@ -559,4 +559,4 @@ def Main():
         else:
             print("Opción inválida. Por favor, elige una opción del 1 al 7.")
 
-casino(jugador)
+Main()
