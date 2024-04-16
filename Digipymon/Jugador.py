@@ -1,8 +1,8 @@
 class Jugador:
     
-    def __init__(self, nombre, genero):
+    def __init__(self, nombre):
         self.nombre = nombre
-        self.genero = genero
+        
     def __init__(self):
         self.lista_digipymon = [] #instanciada a una lista vacía
         self.cantidad_digipymon = 0
