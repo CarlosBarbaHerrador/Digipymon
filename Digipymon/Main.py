@@ -106,6 +106,9 @@ def combate(jugador, enemigo):
     print("Si evitas la pelea perderás 1 Digicoin")
     peleita = str(input("¿Estás seguro de querer combatir? Si/No\n"))
     pelea = peleita.lower()
+    for _ in range(jugador.cantidad_digipymon):
+            digipymon_entrenador = generar_digipymon_aleatorio()
+            enemigo.añadir_digipymon(digipymon_entrenador)
     if pelea == "si":
         os.system("cls")
         print("Te has encontrado a:",nombre_aleatorio_entrenador ,"Preparate para luchar!!")
