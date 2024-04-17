@@ -106,6 +106,7 @@ def combate(jugador, enemigo):
     print("Si evitas la pelea perderás 1 Digicoin")
     peleita = str(input("¿Estás seguro de querer combatir? Si/No\n"))
     pelea = peleita.lower()
+    # Bucle para agregar los Digipymons del jugador al enemigo
     for _ in range(jugador.cantidad_digipymon):
             digipymon_entrenador = generar_digipymon_aleatorio()
             enemigo.añadir_digipymon(digipymon_entrenador)
@@ -113,8 +114,7 @@ def combate(jugador, enemigo):
         os.system("cls")
         print("Te has encontrado a:",nombre_aleatorio_entrenador ,"Preparate para luchar!!")
         print("")
-        # Bucle para agregar los Digipymons del jugador al enemigo
-        
+        # Bucle para agregar los Digipymons del jugador al enemigo (Lo pongo de nuevo para que actualice los digipymons que ha capturado en la ronda anterior en jugador)
         for _ in range(jugador.cantidad_digipymon):
             digipymon_entrenador = generar_digipymon_aleatorio()
             enemigo.añadir_digipymon(digipymon_entrenador)
