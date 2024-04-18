@@ -4,15 +4,10 @@ from Jugador import Jugador
 from Enemigo import Enemigo
 from Inventario import Inventario
 from Digipymon import Digipymon
-lista = ListaNombres()
-enemigo = Enemigo()
-jugador = Jugador()
-inventario = Inventario()
 
-
-
-#TODO ====================== GENERAR DIGIPYMON ALEATORIO =============================
+#TODO ============================ GENERAR DIGIPYMON ALEATORIO ===================================
 def generar_digipymon_aleatorio():
+    lista = ListaNombres()
     #Genera el tipo del digipymon de manera aleatoria del array
     tipos = ["Planta", "Fuego", "Agua"]
     tipo_seleccionado = random.choice(tipos)
@@ -30,8 +25,7 @@ def generar_digipymon_aleatorio():
     
     return digipymon
 
-
-#TODO ================================  MENU  ========================================
+#TODO =====================================  MENU  ===============================================
 def menu():
     print("---------------DIGIPYMON!---------------")
     print("****************************************")
@@ -47,7 +41,7 @@ def menu():
     operacion = int(input())
     return operacion
 
-#TODO ============================ BUSCAR DIGIPYMON  ===================================
+#TODO ================================= BUSCAR DIGIPYMON  ========================================
 def buscar_digipymon(jugador, inventario):
     
     print("Estas buscando digipymons en tu zona", end=" ")
@@ -96,9 +90,9 @@ def buscar_digipymon(jugador, inventario):
     else:
         print("Estas intentando capturar digipymons sin balls?? En serio??\n")
 
-
-#TODO ================================  FUNCION COMBATE  ============================================
+#TODO ================================  FUNCION COMBATE  =========================================
 def combate(jugador, enemigo):
+    lista = ListaNombres()
     ronda_ganada = 0
     ronda_perdida = 0
     nombre_aleatorio_entrenador = lista.obtener_nombre_entrenador()
@@ -215,11 +209,8 @@ def combate(jugador, enemigo):
         jugador.digicoins -= 1
     else:
         print("Comando inválido. Por favor, responde 'Si' o 'No'.")
-
-    
-
-        
-#TODO ===============================  FUNCION DIGISHOP  ==========================================
+       
+#TODO ===============================  FUNCION DIGISHOP  =========================================
 def digishop(jugador, inventario):
     print("╔═════════════════════════════════════════════════════════════════════════════╗")
     print("║                            ¡Bienvenido al Digishop!                         ║")
@@ -270,7 +261,7 @@ def digishop(jugador, inventario):
     else:
         print("Selección no válida. Por favor, elige '1', '2' o '3'.")
 
-#TODO ===============================  FUNCION USAR OBJETO  ==========================================
+#TODO ==============================  FUNCION USAR OBJETO  =======================================
 def usar_item(jugador, inventario):
     # Muestra el inventario
     print("--------INVENTARIO--------")
@@ -335,7 +326,7 @@ def usar_item(jugador, inventario):
     else:
         print("¡Ítem no válido o no disponible en tu inventario!")
 
-#TODO =================================  FUNCION CASINO  ============================================
+#TODO ================================  FUNCION CASINO  ==========================================
 def casino(jugador):
     print("BIENVENIDO AL CASINO DE DIGIPYMON!! AQUI PODRAS GANAR DINERO O PERDERLO")
     print("PASALO BIEN Y RESPETA LAS NORMAS!!\n")
@@ -510,8 +501,10 @@ def casino(jugador):
 #? ====================================================================S
 
 #TODO ==================================  FUNCION MAIN  =============================================
-def Main():
-    
+def main():
+    jugador = Jugador("Pedro")
+    inventario = Inventario()
+    enemigo = Enemigo()
     """
     #! Añade "balls"
     inventario.añadir_objeto("balls",5)
@@ -600,6 +593,7 @@ def Main():
         elif opcion == 5:
             # Consultar inventario
             os.system("cls")
+            print("DIGICOINS:", jugador.digicoins)
             inv = str(inventario.objetos)
             print("--------INVENTARIO--------")
             print(inv.replace("{"," ").replace("}"," ").replace(",","\n").replace("'"," "))
@@ -628,4 +622,4 @@ def Main():
         else:
             print("Opción inválida. Por favor, elige una opción del 1 al 7.")
 
-Main()
+main()
