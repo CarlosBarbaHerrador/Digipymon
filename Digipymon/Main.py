@@ -180,6 +180,7 @@ def combate(jugador, enemigo):
                 print("Has recibido", ronda_ganada, "Digicoins por ganar")
                 print("----------------------------------------")
                 jugador.digicoins += ronda_ganada
+                
             elif ronda_ganada < ronda_perdida:
                 print("----------------------------------------")
                 print("Has sido derrotado por:", nombre_aleatorio_entrenador)
@@ -188,9 +189,11 @@ def combate(jugador, enemigo):
                 #se asegura que no puedas tener dinero negativo
                 if jugador.digicoins > ronda_perdida:
                     jugador.digicoins -= ronda_perdida
+                    
                 elif jugador.digicoins < ronda_perdida:
                     jugador.digicoins = 0
                     print("Eres tan pobre que no puedes perder un diero que no tienes")
+                    
                 else:
                     print("Eres tan pobre que no puedes perder un diero que no tienes")
             else:
