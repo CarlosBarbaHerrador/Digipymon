@@ -128,7 +128,7 @@ def combate(jugador, enemigo):
                     # Compara los ataques de los Digipymons
                     if digipymon_jugador.ataque > digipymon_enemigo.ataque:
                         # El jugador gana el combate
-                        print("¡Tu Digipymon ha ganado el combate!")
+                        print(f"¡{jugador.nombre} ha ganado la ronda!")
                         diferencia_ataque = digipymon_jugador.ataque - digipymon_enemigo.ataque
                         enemigo.lista_digipymon.remove(digipymon_enemigo)
                         ronda_ganada += 1
@@ -141,7 +141,7 @@ def combate(jugador, enemigo):
                                   
                     elif digipymon_jugador.ataque < digipymon_enemigo.ataque:
                         # El jugador pierde el combate
-                        print("¡Tu Digipymon ha perdido el combate!")
+                        print("¡Tu Digipymon ha perdido la ronda!")
                         diferencia_ataque = digipymon_enemigo.ataque - digipymon_jugador.ataque
                         digipymon_jugador.vida -= diferencia_ataque
                         ronda_perdida += 1 
@@ -502,7 +502,7 @@ def casino(jugador):
 
 #TODO ==================================  FUNCION MAIN  =============================================
 def main():
-    jugador = Jugador("Pedro")
+    jugador = Jugador("*")
     inventario = Inventario()
     enemigo = Enemigo()
     """
@@ -518,29 +518,64 @@ def main():
     """
     
     os.system("cls")
-
+    jugador.nombre = input("Bienvenido a digipymmon!!, Cual es tu nombre??\n").capitalize()
+     
     #Intro para dar el pokemon inicial
     pregunta1 = input("Vaya!! No te habia visto por aqui!!,\n Eres nuevo??" "(Si/No)").lower()
     print("")
     if pregunta1 == "si":
-        print("Oh, entiendo entiendo.\n Te explicare un poco todo esto entonces!!\n")
+        print("Oh, entiendo entiendo. Es un placer conocerte", jugador.nombre,"\nTe explicare un poco todo esto entonces!!\n")
         print("Este mundo se llama DIGIPYMON un mundo increible donde puedes capturar y luchar con unas criaturas increiblemente interesantes")
-        aceptar_digi = input("Y hablando de esas criaturitas... Te veo escaso de un digipymon, ¿te interesaria que te de uno? (Si/No)\n").lower()
+        aceptar_digi = input("Y hablando de esas criaturitas... Te veo escaso de un digipymon, ¿te interesaria que te de uno? (Si/No)\n\nSI ELIGES QUE NO SE TE ASIGNARA UNO CON ESTADISTICAS ALEATORIAS PARA QUE EL JUEGO TENGA CIERTA COMPLEJIDAD EXTRA\n").lower()
        
         if aceptar_digi == "si":
             os.system("cls")
             print("Asi se habla!!")
-            digi_inicial = generar_digipymon_aleatorio()
-            jugador.añadir_digipymon(digi_inicial)   
+            #genera los digipymons iniciales
+            digi_inicial_fuego = Digipymon("Flamagon", 10, 5, 1, "Fuego")
+            digi_inicial_planta = Digipymon("Polivine", 10, 5, 1, "Planta")
+            digi_inicial_agua = Digipymon("Aqualisk", 10, 5, 1, "Agua")
+            digi_inicial_especial = Digipymon("Overlord el devora mundos", 999, 999, 999, "Dragon")
+            #Enseña lo sdigipymons iniciales excepto uno (easter eggs)
+            print(digi_inicial_fuego,"\n" , digi_inicial_planta,"\n" , digi_inicial_agua)
+            
+            elige_digi = input("Cual de estos pequeñines quieres??(1/2/3)\n").lower()
+            if elige_digi == "1":
+                print("\nHas elegido a Flamagon!!")
+                jugador.añadir_digipymon(digi_inicial_fuego)
+                print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**\n")
+                print(digi_inicial_fuego)
+                
+            elif elige_digi == "2":
+                print("\nHas elegido a Polivine!!")
+                jugador.añadir_digipymon(digi_inicial_planta)
+                print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**\n")
+                print(digi_inicial_planta)
+                
+            elif elige_digi == "3":
+                print("\nHas elegido a Aqualisk!!")
+                jugador.añadir_digipymon(digi_inicial_agua)
+                print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**\n")
+                print(digi_inicial_agua)
+                
+            elif elige_digi == "666":
+                os.system("cls")
+                print("De debajo de tus pies algo ocurre... un portal se abre,es rojo como el mismisimo infierno y llamas salen de el\nY de el sale un pequeño digipymon el cual te mira y una voz resuena en tu cabeza diciendo: ¿mama?")
+                print("Decides adoptar al pequeño digipymon aunque no sabees muy bien por que")
+                jugador.añadir_digipymon(digi_inicial_especial)
+                print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**\n")
+                print(digi_inicial_especial)
+               
         else:
             os.system("cls")
             print("Vamos vamos no seas timido...")
             print("Aqui tienes, cogelo")
             digi_inicial = generar_digipymon_aleatorio()
             jugador.añadir_digipymon(digi_inicial)
+            print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**")
+            print(digi_inicial)
             
-        print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**")
-        print(digi_inicial)
+        
         print("")
         print("Yo tengo que irme ya pero ya veraas como todo va bien.")
         print("Disfruta de tu aventura!!")
@@ -556,16 +591,16 @@ def main():
         
     print("")
     print("ANTES DE IRSE EL MISTERIOSO SEÑOR HA DEJADO UNA BOLSA CON UNA NOTA: ")
-    bolsa = input("Quieres leer la nota??   (Si/No)" ).lower()
+    bolsa = input("Quieres leer la nota??   (Si/No)\n" ).lower()
     if bolsa == "si":
-        print("Siento las prisas pero tenia cosas que hacer, solo por si crees necesitarlo aqui te dejo algunas cosas...\n")
-        coger = input("¿Quieres coger la bolsa?   (Si/No)\n").lower()
-        if coger == "si":
-            print("***Has recibido 3 balls y 1 pocion***")
-            inventario.añadir_objeto("balls", 3)
-            inventario.añadir_objeto("pocion", 1)
-        else:
-            print("Te vas sin coger la bolsa")
+        os.system("cls")
+        print("\nSiento las prisas pero tenia cosas que hacer, solo por si crees necesitarlo aqui te dejo algunas cosas...\n")
+             
+        print("***   Has recibido 10 digicoins  ***")
+        print("***   Has recibido 3 balls       ***")
+        print("***   Has recibido 1 pocion      ***")
+        inventario.añadir_objeto("balls", 3)
+        inventario.añadir_objeto("pocion", 1)
     else:
         print("Te vas sin leer si quiera la nota")
     # Continuamos con el bucle principal del juego
@@ -593,7 +628,7 @@ def main():
         elif opcion == 5:
             # Consultar inventario
             os.system("cls")
-            print("DIGICOINS:", jugador.digicoins)
+            print("DIGICOINS:", jugador.consultar_digicoins())
             inv = str(inventario.objetos)
             print("--------INVENTARIO--------")
             print(inv.replace("{"," ").replace("}"," ").replace(",","\n").replace("'"," "))
@@ -602,9 +637,8 @@ def main():
         elif opcion == 6:
             # Consultar digipymons
             os.system("cls")
-            print("Tienes un total de:", jugador.cantidad_digipymon , "Digipymons\n")
-            for i in jugador.lista_digipymon:
-                print(i)
+            jugador.consultar_digipymon()
+
         elif opcion == 7:
             #Casino
             casino(jugador)
