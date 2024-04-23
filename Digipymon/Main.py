@@ -563,8 +563,8 @@ def main():
                 
             elif elige_digi == "666":
                 os.system("cls")
-                print("De debajo de tus pies algo ocurre... un portal se abre,es rojo como el mismisimo infierno y llamas salen de el\nY de el sale un pequeño digipymon el cual te mira y una voz resuena en tu cabeza diciendo: ¿mama?")
-                print("Decides adoptar al pequeño digipymon aunque no sabees muy bien por que")
+                print("De debajo de tus pies algo ocurre... un portal se abre, es rojo como el mismisimo infierno y llamas salen de el\nY de el sale un pequeño digipymon el cual te mira y una voz resuena en tu cabeza diciendo: ¿mama?")
+                print("Decides adoptar al pequeño digipymon aunque no sabes muy bien por que")
                 jugador.añadir_digipymon(digi_inicial_especial)
                 print(" **HAS RECIBIDO TU PRIMER DIGIPYMON**\n")
                 print(digi_inicial_especial)
