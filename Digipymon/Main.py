@@ -92,34 +92,101 @@ def buscar_digipymon(jugador, inventario):
         print("Estas intentando capturar digipymons sin balls?? En serio??\n")
 
 #TODO ================================  FUNCION COMBATE  =========================================
-def combate(jugador, enemigo):
+def combate(jugador, enemigo, contador):
     lista = ListaNombres()
     ronda_ganada = 0
     ronda_perdida = 0
+    contador[0] += 1 
+    
     nombre_aleatorio_entrenador = lista.obtener_nombre_entrenador()
     
     print("Si evitas la pelea perderás 1 Digicoin")
     peleita = str(input("¿Estás seguro de querer combatir? Si/No\n"))
     pelea = peleita.lower()
     # Bucle para agregar los Digipymons del jugador al enemigo
-    for _ in range(jugador.cantidad_digipymon):
-            digipymon_entrenador = generar_digipymon_aleatorio()
-            enemigo.añadir_digipymon(digipymon_entrenador)
+
     if pelea == "si":
+        
         os.system("cls")
+        print(contador[0])
         print("Te has encontrado a:",nombre_aleatorio_entrenador ,"Preparate para luchar!!")
         print("")
-        # Bucle para agregar los Digipymons del jugador al enemigo (Lo pongo de nuevo para que actualice los digipymons que ha capturado en la ronda anterior en jugador)
-        for _ in range(jugador.cantidad_digipymon):
-            digipymon_entrenador = generar_digipymon_aleatorio()
-            enemigo.añadir_digipymon(digipymon_entrenador)
-     
 
         if jugador.cantidad_digipymon == 0:
             print("No tienes Digipymons para combatir.")
+
+         # Enfrentamiento contra el jefe al alcanzar la décima ronda
+        elif contador[0] == 10:        
+            os.system("cls")
+            print("Alguien te habla, sabes quien es, su reputacion le precede... Es el gran entrenador Jose de Base de datos!!!\n")
+            print("Jose: ¡EY, EY, EY! ¿Eres tú ese entrenador que ha estado machacando a todos los mindundis de esta zona? Con mi Digipymon será diferente, ¡te reto! Todos tus Digipymons contra el mío solo, a ver qué tal.\n")
+            print("\n¡Te has encontrado a un jefe, prepárate para luchar....")
+
+            # genera un daño aleatorio cada ronda para que el combate sea mas interactivo y menos estatico
+            ataque_boss = random.randint(5, 35)
+            
+            digipymon_boss = Digipymon("", 125, ataque_boss, 10, "Fantasma")
+            print(digipymon_boss)
+            enemigo.añadir_digipymon(digipymon_boss)
+
+            ataque_total_jugador = sum(digipymon.ataque for digipymon in jugador.lista_digipymon)
+            ataque_total_enemigo = digipymon_boss.ataque
+            
+            # Simular la batalla
+            while True:
+                print("Peleando", end=" ")
+                for _ in range(3):
+                    print(".", end=" ", flush=True)
+                    time.sleep(0.5)  # Pausa de 1 segundo entre cada punto suspensivo
+                # genera un daño aleatorio cada ronda para que el combate sea mas interactivo y menos estatico
+                ataque_total_enemigo = random.randint(5, 35)
+                digipymon_boss.ataque = ataque_total_enemigo
+                # Calcular el ataque total del jugador
+                print("")
+                print(f"El enemigo ha realizado un ataque de {digipymon_boss.ataque} de fuerza")
+                ataque_total_jugador = sum(digipymon.ataque for digipymon in jugador.lista_digipymon)
+                
+                # Simular el combate
+                if ataque_total_jugador > ataque_total_enemigo:
+                    # El jugador gana
+                    diferencia_ataque = ataque_total_jugador - ataque_total_enemigo
+                    digipymon_boss.vida -= diferencia_ataque
+                    print("Tus digipymons han conseguido esquivar y contraatacar, le han quitado: ",diferencia_ataque, "de vida!!")
+                    print("════════════════════════════════════════════════════════")
+                    print(f"Le queda: {digipymon_boss.vida}")
+                    if digipymon_boss.vida <= 0:
+                        print("¡Has derrotado al jefe Digipymon!")
+                        print("Por la victoria has ganado 50 digicoins!!!")
+                        jugador.digicoins += 50
+                        print("Jose: has luchado bien, muy bien mi mas sincer enhora buena")
+                        break  # Termina la batalla
+                elif ataque_total_jugador < ataque_total_enemigo:
+                    # El jefe gana
+                    diferencia_ataque = ataque_total_enemigo - ataque_total_jugador
+                    for digipymon in jugador.lista_digipymon:
+                        digipymon.vida -= diferencia_ataque
+                        if digipymon.vida <= 0:
+                            jugador.lista_digipymon.remove(digipymon)
+                    print("Tus digipymons han sufrido ",diferencia_ataque, "de daño!!")
+                    print("════════════════════════════════════════════════════════")
+                    if len(jugador.lista_digipymon) == 0:
+                        print("¡El jefe Digipymon te ha derrotado!")
+                        print("Tus digipymons han caido en combate y los has perdido")
+                        print("Un duro dia para cualquier entrenador")
+                        break  # Termina la batalla
+                else:
+                    print("¡Ha sido un empate!")
+                    print("══════════════════════════════════════")
+                # Comprobar si uno de los equipos ha perdido toda su vida
+                if ataque_total_jugador <= 0 or digipymon_boss.vida <= 0:
+                    break  # Termina la batalla si la vida de alguno es menor o igual a 0
+
             
         else:
-            
+            # Bucle para agregar los Digipymons del jugador al enemigo (Lo pongo de nuevo para que actualice los digipymons que ha capturado en la ronda anterior en jugador)
+            for _ in range(jugador.cantidad_digipymon):
+                digipymon_entrenador = generar_digipymon_aleatorio()
+                enemigo.añadir_digipymon(digipymon_entrenador)
             # Itera sobre los Digipymons del jugador y del enemigo
             for i in range(min(jugador.cantidad_digipymon, enemigo.cantidad_digipymon)):
                 if i < len(jugador.lista_digipymon) and i < len(enemigo.lista_digipymon):
@@ -203,7 +270,7 @@ def combate(jugador, enemigo):
                 print("Al empatar no pierdes ni ganas digicoins")
                 print("----------------------------------------")
              # Después de cada combate, muestra el estado actual de los Digipymons del jugador
-        contador_peleas += 1
+        
                 
                 
     elif pelea == "no":
@@ -213,6 +280,7 @@ def combate(jugador, enemigo):
         jugador.digicoins -= 1
     else:
         print("Comando inválido. Por favor, responde 'Si' o 'No'.")
+    
        
 #TODO ===============================  FUNCION DIGISHOP  =========================================
 def digishop(jugador, inventario):
@@ -509,6 +577,7 @@ def main():
     jugador = Jugador("*")
     inventario = Inventario()
     enemigo = Enemigo()
+    contador_peleas = [8]
     """
     #! Añade "balls"
     inventario.añadir_objeto("balls",5)
@@ -611,7 +680,7 @@ def main():
     # Continuamos con el bucle principal del juego
     while True:
         #! Hacer el pelearse con un boss, si el contador llega a 10 un if en la opcion 2 hata que pelees contra el boss o un entrenador normal
-        contador_peleas = 0
+        
         opcion = menu()
         
         if opcion == 1:
@@ -620,8 +689,10 @@ def main():
             buscar_digipymon(jugador, inventario)
             
         elif opcion == 2:
-            # Luchar contra un entrenador
-            combate(jugador, enemigo)
+            # Luchar contra un entrenador          
+            combate(jugador, enemigo, contador_peleas)
+
+
             
         elif opcion == 3:
             # Ir a la tienda
