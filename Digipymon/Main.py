@@ -27,17 +27,18 @@ def generar_digipymon_aleatorio():
 
 #TODO =====================================  MENU  ===============================================
 def menu():
-    print("---------------DIGIPYMON!---------------")
-    print("****************************************")
-    print("1. Buscar Digipymon")
-    print("2. Luchar contra un entrenador")
-    print("3. Ir a la tienda")
-    print("4. Usar objetos")
-    print("5. Consultar inventario")
-    print("6. Consultar Digipymons")
-    print("7. Casino")
-    print("8. Salir")
-    print("****************************************")
+    print("")
+    print("╔══════════════ DIGIPYMON! ═════════════╗")
+    print("║ 1. Buscar Digipymon                   ║")
+    print("║ 2. Luchar contra un entrenador        ║")
+    print("║ 3. Ir a la tienda                     ║")
+    print("║ 4. Usar objetos                       ║")
+    print("║ 5. Consultar inventario               ║")
+    print("║ 6. Consultar Digipymons               ║")
+    print("║ 7. Casino                             ║")
+    print("║ 8. Salir                              ║")
+    print("╚═══════════════════════════════════════╝")
+
     operacion = int(input())
     return operacion
 
@@ -202,7 +203,7 @@ def combate(jugador, enemigo):
                 print("Al empatar no pierdes ni ganas digicoins")
                 print("----------------------------------------")
              # Después de cada combate, muestra el estado actual de los Digipymons del jugador
-
+        contador_peleas += 1
                 
                 
     elif pelea == "no":
@@ -538,6 +539,7 @@ def main():
             digi_inicial_fuego = Digipymon("Flamagon", 10, 5, 1, "Fuego")
             digi_inicial_planta = Digipymon("Polivine", 10, 5, 1, "Planta")
             digi_inicial_agua = Digipymon("Aqualisk", 10, 5, 1, "Agua")
+            #Easter egg
             digi_inicial_especial = Digipymon("Overlord el devora mundos", 999, 999, 999, "Dragon")
             #Enseña lo sdigipymons iniciales excepto uno (easter eggs)
             print(digi_inicial_fuego,"\n" , digi_inicial_planta,"\n" , digi_inicial_agua)
@@ -608,7 +610,8 @@ def main():
         print("Te vas sin leer si quiera la nota")
     # Continuamos con el bucle principal del juego
     while True:
-        
+        #! Hacer el pelearse con un boss, si el contador llega a 10 un if en la opcion 2 hata que pelees contra el boss o un entrenador normal
+        contador_peleas = 0
         opcion = menu()
         
         if opcion == 1:
@@ -633,9 +636,9 @@ def main():
             os.system("cls")
             print("DIGICOINS:", jugador.consultar_digicoins())
             inv = str(inventario.objetos)
-            print("--------INVENTARIO--------")
+            print("╔═══════════ INVENTARIO ═══════════╗")
             print(inv.replace("{"," ").replace("}"," ").replace(",","\n").replace("'"," "))
-            print("--------------------------")
+            print("╚══════════════════════════════════╝")
             
         elif opcion == 6:
             # Consultar digipymons
