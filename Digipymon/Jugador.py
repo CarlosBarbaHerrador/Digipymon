@@ -16,4 +16,4 @@ class Jugador:
             print(digipymon)
         
     def consultar_digicoins(self):
-        print(self.digicoins)  # Imprimir la cantidad de Digicoins
+        return self.digicoins  # Imprimir la cantidad de Digicoins
