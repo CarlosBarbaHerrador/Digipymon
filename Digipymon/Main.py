@@ -44,12 +44,12 @@ def menu():
 
 #TODO ================================= BUSCAR DIGIPYMON  ========================================
 def buscar_digipymon(jugador, inventario):
-    
+    """
     print("Estas buscando digipymons en tu zona", end=" ")
     for _ in range(3):
         print(".", end=" ", flush=True)
         time.sleep(1)  # Pausa de 1 segundo entre cada punto suspensivo
-        
+    """
     print()
     digipymon_encontrado = generar_digipymon_aleatorio()
     print(digipymon_encontrado)
@@ -138,6 +138,7 @@ def combate(jugador, enemigo, contador):
                 for _ in range(3):
                     print(".", end=" ", flush=True)
                     time.sleep(0.5)  # Pausa de 1 segundo entre cada punto suspensivo
+                    
                 # genera un daño aleatorio cada ronda para que el combate sea mas interactivo y menos estatico
                 ataque_total_enemigo = random.randint(5, 35)
                 digipymon_boss.ataque = ataque_total_enemigo
@@ -167,6 +168,7 @@ def combate(jugador, enemigo, contador):
                         digipymon.vida -= diferencia_ataque
                         if digipymon.vida <= 0:
                             jugador.lista_digipymon.remove(digipymon)
+                            jugador.cantidad_digipymon -= 1
                     print("Tus digipymons han sufrido ",diferencia_ataque, "de daño!!")
                     print("════════════════════════════════════════════════════════")
                     if len(jugador.lista_digipymon) == 0:
@@ -187,60 +189,61 @@ def combate(jugador, enemigo, contador):
             for _ in range(jugador.cantidad_digipymon):
                 digipymon_entrenador = generar_digipymon_aleatorio()
                 enemigo.añadir_digipymon(digipymon_entrenador)
-            # Itera sobre los Digipymons del jugador y del enemigo
-            for i in range(min(jugador.cantidad_digipymon, enemigo.cantidad_digipymon)):
-                if i < len(jugador.lista_digipymon) and i < len(enemigo.lista_digipymon):
-                    digipymon_jugador = jugador.lista_digipymon[i]
-                    digipymon_enemigo = enemigo.lista_digipymon[i]
-                    
-                    # Compara los ataques de los Digipymons
-                    if digipymon_jugador.ataque > digipymon_enemigo.ataque:
-                        # El jugador gana el combate
-                        print(f"¡{jugador.nombre} ha ganado la ronda!")
-                        diferencia_ataque = digipymon_jugador.ataque - digipymon_enemigo.ataque
-                        enemigo.lista_digipymon.remove(digipymon_enemigo)
-                        ronda_ganada += 1
-                        
-                        if digipymon_enemigo.vida <= 0:
-                            print("¡El Digipymon enemigo ha sido derrotado!(Debilitado)")
-                            enemigo.lista_digipymon.remove(digipymon_enemigo)
-                            enemigo.cantidad_digipymon -= 1
-                            ronda_ganada += 1
-                                  
-                    elif digipymon_jugador.ataque < digipymon_enemigo.ataque:
-                        # El jugador pierde el combate
-                        print("¡Tu Digipymon ha perdido la ronda!")
-                        diferencia_ataque = digipymon_enemigo.ataque - digipymon_jugador.ataque
-                        digipymon_jugador.vida -= diferencia_ataque
-                        ronda_perdida += 1 
-                        enemigo.lista_digipymon.remove(digipymon_enemigo)
-                        if digipymon_jugador.vida <= 0:
-                            print("¡Tu Digipymon ha sido derrotado!(Debilitado)")
-                            jugador.lista_digipymon.remove(digipymon_jugador)
-                            jugador.cantidad_digipymon -= 1
-                            
-                    else:
-                        # Empate, ambos Digipymons pierden vida
-                        print("¡El combate ha terminado en empate!")
-                        diferencia_ataque = 0  # No hay diferencia de ataque en caso de empate
-                        digipymon_jugador.vida -= diferencia_ataque
-                        digipymon_enemigo.vida -= diferencia_ataque
-                        enemigo.lista_digipymon.remove(digipymon_enemigo)
-                        
-                        if digipymon_jugador.vida <= 0:
-                            print("¡Tu Digipymon ha sido derrotado!")
-                            jugador.lista_digipymon.remove(digipymon_jugador)
-                            jugador.cantidad_digipymon -= 1
-                            
-                        if digipymon_enemigo.vida <= 0:
-                            print("¡El Digipymon enemigo ha sido derrotado!")
-                            enemigo.lista_digipymon.remove(digipymon_enemigo)
-                            enemigo.cantidad_digipymon -= 1
-                    
-                    print("         ", "Tu","/","Enemigo")
-                    print("Marcador: ", ronda_ganada ,"/", ronda_perdida)
-                    print("----------------------------------------")
+               
+            
+            for i in range(jugador.cantidad_digipymon):  
+                digipymon_jugador = jugador.lista_digipymon[i]
+                digipymon_enemigo = enemigo.lista_digipymon[i]
                 
+                # Compara los ataques de los Digipymons
+                if digipymon_jugador.ataque > digipymon_enemigo.ataque:
+                    # El jugador gana el combate
+                    print(f"¡{jugador.nombre} ha ganado la ronda!")
+                    diferencia_ataque = digipymon_jugador.ataque - digipymon_enemigo.ataque
+                    ronda_ganada += 1
+                    
+                    if digipymon_enemigo.vida <= 0:
+                        print("¡El Digipymon enemigo ha sido derrotado!(Debilitado)")
+                        
+                        enemigo.cantidad_digipymon -= 1
+                        ronda_ganada += 1
+                                
+                elif digipymon_jugador.ataque < digipymon_enemigo.ataque:
+                    # El jugador pierde el combate
+                    print("¡Tu Digipymon ha perdido la ronda!")
+                    diferencia_ataque = digipymon_enemigo.ataque - digipymon_jugador.ataque
+                    digipymon_jugador.vida -= diferencia_ataque
+                    ronda_perdida += 1 
+                    
+                    if digipymon_jugador.vida <= 0:
+                        print("¡Tu Digipymon ha sido derrotado!(Debilitado)")
+                        jugador.lista_digipymon.remove(digipymon_jugador)
+                        jugador.cantidad_digipymon -= 1
+                        
+                else:
+                    # Empate, ambos Digipymons pierden vida
+                    print("¡El combate ha terminado en empate!")
+                    diferencia_ataque = 0  # No hay diferencia de ataque en caso de empate
+                    digipymon_jugador.vida -= diferencia_ataque
+                    digipymon_enemigo.vida -= diferencia_ataque
+                    
+                    
+                    if digipymon_jugador.vida <= 0:
+                        print("¡Tu Digipymon ha sido derrotado!")
+                        jugador.lista_digipymon.remove(digipymon_jugador)
+                        jugador.cantidad_digipymon -= 1
+                        
+                    if digipymon_enemigo.vida <= 0:
+                        print("¡El Digipymon enemigo ha sido derrotado!")
+                        
+                        enemigo.cantidad_digipymon -= 1
+                
+                print("         ", "Tu","/","Enemigo")
+                print("Marcador: ", ronda_ganada ,"/", ronda_perdida)
+                print("----------------------------------------")
+            enemigo.lista_digipymon.clear()
+            enemigo.cantidad_digipymon = 0
+            
             # si ganas te da dinero y si pierdes te lo quita
             if ronda_ganada > ronda_perdida:
                 print("----------------------------------------")
@@ -280,8 +283,7 @@ def combate(jugador, enemigo, contador):
         jugador.digicoins -= 1
     else:
         print("Comando inválido. Por favor, responde 'Si' o 'No'.")
-    
-       
+         
 #TODO ===============================  FUNCION DIGISHOP  =========================================
 def digishop(jugador, inventario):
     print("╔═════════════════════════════════════════════════════════════════════════════╗")
@@ -577,7 +579,7 @@ def main():
     jugador = Jugador("*")
     inventario = Inventario()
     enemigo = Enemigo()
-    contador_peleas = [8]
+    contador_peleas = [0]
     """
     #! Añade "balls"
     inventario.añadir_objeto("balls",5)
@@ -665,7 +667,7 @@ def main():
         
     print("")
     print("ANTES DE IRSE EL MISTERIOSO SEÑOR HA DEJADO UNA BOLSA CON UNA NOTA: ")
-    bolsa = input("Quieres leer la nota??   (Si/No)\n" ).lower()
+    bolsa = input("Quieres leer la nota??   (Si/No)\n\n***Si eliges (no) no se te daran objetos iniciales para mayor dificultad***" ).lower()
     if bolsa == "si":
         os.system("cls")
         print("\nSiento las prisas pero tenia cosas que hacer, solo por si crees necesitarlo aqui te dejo algunas cosas...\n")
