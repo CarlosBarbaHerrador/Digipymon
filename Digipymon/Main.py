@@ -4,6 +4,9 @@ from Jugador import Jugador
 from Enemigo import Enemigo
 from Inventario import Inventario
 from Digipymon import Digipymon
+from Casino import Casino
+from VenderDigipymon import VenderDigipymon
+
 
 #TODO ============================ GENERAR DIGIPYMON ALEATORIO ===================================
 def generar_digipymon_aleatorio():
@@ -45,12 +48,12 @@ def menu():
 
 #TODO ================================= BUSCAR DIGIPYMON  ========================================
 def buscar_digipymon(jugador, inventario):
-    """
+   
     print("Estas buscando digipymons en tu zona", end=" ")
     for _ in range(3):
         print(".", end=" ", flush=True)
         time.sleep(1)  # Pausa de 1 segundo entre cada punto suspensivo
-    """
+    
     print()
     digipymon_encontrado = generar_digipymon_aleatorio()
     print(digipymon_encontrado)
@@ -192,7 +195,7 @@ def combate(jugador, enemigo, contador):
                 enemigo.añadir_digipymon(digipymon_entrenador)
                
             
-            for i in range(jugador.cantidad_digipymon):  
+            for i in range(len(jugador.lista_digipymon)):  
                 digipymon_jugador = jugador.lista_digipymon[i]
                 digipymon_enemigo = enemigo.lista_digipymon[i]
                 
@@ -264,10 +267,10 @@ def combate(jugador, enemigo, contador):
                     
                 elif jugador.digicoins < ronda_perdida:
                     jugador.digicoins = 0
-                    print("Eres tan pobre que no puedes perder un diero que no tienes")
+                    print("Eres tan pobre que no puedes perder un dinero que no tienes")
                     
                 else:
-                    print("Eres tan pobre que no puedes perder un diero que no tienes")
+                    print("Eres tan pobre que no puedes perder un dinero que no tienes")
             else:
                 print("----------------------------------------")
                 print("Has empatado con:", nombre_aleatorio_entrenador)
@@ -287,6 +290,7 @@ def combate(jugador, enemigo, contador):
          
 #TODO ===============================  FUNCION DIGISHOP  =========================================
 def digishop(jugador, inventario):
+    print("DIGICOINS:", jugador.consultar_digicoins())
     print("╔═════════════════════════════════════════════════════════════════════════════╗")
     print("║                            ¡Bienvenido al Digishop!                         ║")
     print("║                                                                             ║")
@@ -401,300 +405,14 @@ def usar_item(jugador, inventario):
     else:
         print("¡Ítem no válido o no disponible en tu inventario!")
 
-#TODO ================================  FUNCION CASINO  ==========================================
-def casino(jugador):
-    print("BIENVENIDO AL CASINO DE DIGIPYMON!! AQUI PODRAS GANAR DINERO O PERDERLO")
-    print("PASALO BIEN Y RESPETA LAS NORMAS!!\n")
-    
-    while True:
-        # Menú principal del casino
-        print("╔═══════════════════════════════════════╗")
-        print("║         ¡Bienvenido al Casino!        ║")
-        print("╠═══════════════════════════════════════╣")
-        print("║           Seleccione un juego:        ║")
-        print("║           1. Lanzamiento de dados     ║")
-        print("║           2. Ruleta                   ║")
-        print("║           3. Tombola                  ║")
-        print("║           4. Salir                    ║")
-        print("╚═══════════════════════════════════════╝")
-        opcion_casino = input("Ingrese el número del juego que desea jugar: ")
-        
-        if opcion_casino == "1":
-            # Juego de lanzamiento de dados
-            if jugador.digicoins <= 0:
-                print("Lo siento, no tienes suficientes Digicoins para jugar.")
-                continue
-            
-            os.system("cls")
-            print("Estás jugando al lanzamiento de dados!!")
-            print("Si la suma de los dados es mayor que 7, ¡ganarás!")
-            
-            # Pedir al jugador que ingrese la cantidad de apuesta
-            while True:
-                pago = int(input("Ingrese la cantidad que desea apostar: "))
-                if pago <= 0:
-                    print("Por favor, ingrese una cantidad válida mayor que 0.")
-                elif pago > jugador.digicoins:
-                    print("Lo siento, no tienes suficientes Digicoins para realizar esa apuesta.")
-                else:
-                    break
-                
-            jugador.digicoins -= pago
-            
-            # Simulación del lanzamiento de dados
-            print("Lanzando dados", end=" ")
-            for _ in range(3):
-                print(".", end=" ", flush=True)
-                time.sleep(1)  # Pausa de 1 segundo entre cada punto suspensivo
-            
-            print("")
-            dado1 = random.randint(1, 6)
-            dado2 = random.randint(1, 6)
-            print("\nHas lanzado los dados y obtuviste:", dado1, "y", dado2)
-            suma_dados = dado1 + dado2
-            print("La suma de los dados es:", suma_dados)
-            
-            # Determinar el resultado del juego
-            if suma_dados > 7:
-                jugador.digicoins += pago * 2
-                print("¡Felicidades! Has ganado", pago * 2 ,"Digicoins")
-            else:
-                print("Lo siento, no has ganado esta vez.")
-                
-        elif opcion_casino == "2":
-            # Juego de ruleta
-            os.system("cls")
-            print("Bienvenido a la RULE de DIGIPYMON!!!")
-            print("Actualmente tienes", jugador.digicoins, "DIGICOINS\n")
-            opciones_ruleta = ["Rojo", "Negro", "Verde","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Rojo","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro","Negro",]
-            opcion_rule = random.choice(opciones_ruleta).lower()
-            print("Si aciertas el color GANARAS!!!")
-            print("Negro = 56,35% ---> x2 ganancia")
-            print("Rojo = 40,63% ----> x3 ganancia")
-            print("Verde = 3,13% ----> x10 ganancia")
-            color = str(input("A que color quieres apostar?? (Escribe el color a apostar): ")).lower()
-            
-            # Pedir al jugador que ingrese la cantidad de apuesta
-            pago = int(input("Ingrese la cantidad que desea apostar: "))
-            
-            if pago <= 0:
-                print("Por favor, ingrese una cantidad válida mayor que 0.")
-                continue
-            elif pago > jugador.digicoins:
-                print("Lo siento, no tienes suficientes Digicoins para realizar esa apuesta.")
-                continue
-            
-            jugador.digicoins -= pago
-            
-            # Simulación del giro de la ruleta
-            print("Girando la ruleta", end=" ")
-            for _ in range(3):
-                print(".", end=" ", flush=True)
-                time.sleep(1)  
-            print("\nLa ruleta ha girado y el color ganador es:", opcion_rule)
-            
-            # Determinar el resultado del juego
-            if opcion_rule == "verde" and color == "verde":
-                jugador.digicoins += pago * 10
-                print("¡Felicidades! Has acertado el color verde y has ganado", pago * 10 ,"Digicoins")
-            elif opcion_rule == "negro" and color == "negro":
-                jugador.digicoins += pago * 2
-                print("¡Felicidades! Has acertado el color y has ganado", pago * 2 ,"Digicoins")
-            elif opcion_rule == "rojo" and color == "rojo":
-                jugador.digicoins += pago * 3
-                print("¡Felicidades! Has acertado el color y has ganado", pago * 3 ,"Digicoins")
-            else:
-                print("Lo siento, no has acertado el color esta vez.")
-                
-        elif opcion_casino == "3":
-            # Juego de tombola
-            os.system("cls")
-            print("Bienvenido a la tombolaaaaaaaaa, donde puedes ganar una gran cantidad de premios aleatoriooos")
-            print("╔════════════════ PREMIOS O CASTIGOS ═════════════════╗")
-            print("║                                                     ║")
-            print("║  1. Mejora de stats a tu Digipymon                  ║")
-            print("║  2. Bajada de stats a tu Digipymon                  ║")
-            print("║  3. Digicoins                                       ║")
-            print("║  4. Pierdes Digicoins                               ║")
-            print("║  5. Un nuevo Digipymon                              ║")
-            print("║  6. Pierdes un Digipymon                            ║")
-            print("║                                                     ║")
-            print("╚═════════════════════════════════════════════════════╝")
-            
-            # Permitir al jugador tirar la tombola
-            tirar = input("Quieres hacer girar la tombola?? (Cuesta 10 DIGICOINS) (SI/NO)").lower()
-            if tirar == "si" and jugador.digicoins >= 10:
-                opciones_tombola = ["Mejora de stats a tu Digipymon","Bajada de stats a tu Digipymon","Digicoins","Pierdes Digicoins","Un nuevo Digipymon","Pierdes un Digipymon" ]
-                opcion_tombo = random.choice(opciones_tombola).lower()
-                
-                print("Y ha tocacado...",opcion_tombo ,"!!!!")
-                
-                # Determinar el premio o castigo y aplicar las consecuencias
-                if opcion_tombo == "mejora de stats a tu digipymon":
-                    # Mejora las estadísticas del primer Digipymon
-                    jugador.lista_digipymon[0].vida += 10    
-                    jugador.lista_digipymon[0].ataque += 5  
-                    print("La vida de ", jugador.lista_digipymon[0].nombre, "a subido 10 puntos!!")
-                    print("El ataque de ", jugador.lista_digipymon[0].nombre, "a subido 5 puntos!!")
-                elif opcion_tombo == "bajada de stats a tu digipymon":
-                    # Reduce las estadísticas del primer Digipymon
-                    jugador.lista_digipymon[0].vida -= 10    
-                    jugador.lista_digipymon[0].ataque -= 5  
-                    print("La vida de ", jugador.lista_digipymon[0].nombre, "a bajado 10 puntos!!")
-                    print("El ataque de ", jugador.lista_digipymon[0].nombre, "a bajado 5 puntos!!")
-                    print("Mas suerte la proxima vez!!")
-                elif opcion_tombo == "digicoins":
-                    # Otorga 30 Digicoins al jugador
-                    jugador.digicoins += 30
-                    print("Has ganado 30 DIGICOINS!!!")
-                elif opcion_tombo == "pierdes digicoins":
-                    # Reduce los Digicoins del jugador a 0
-                    jugador.digicoins = 0
-                    print("Has perdido TODAS tus DIGICOINS!!!")
-                    print("Tu cuenta ha bajado a 0 DIGICOINS, te has arruinado!!")
-                    print("Apostar no es lo tuyo")
-                elif opcion_tombo == "un nuevo digipymon":
-                    # Agrega un nuevo Digipymon al inventario del jugador si no tiene el máximo
-                    print("Has ganado un nuevo compañero de aventuras!!")
-                    if jugador.cantidad_digipymon >= 6:
-                        print("Lo siento ya tienes el máximo de digipymons")
-                    else:
-                        digipymon_tombo = generar_digipymon_aleatorio()
-                        jugador.añadir_digipymon(digipymon_tombo)
-                        print(digipymon_tombo)
-                elif opcion_tombo == "pierdes un digipymon":
-                    # Elimina un Digipymon del inventario del jugador
-                    jugador.lista_digipymon.remove(digipymon_jugador)
-                    print("Uno de tus digipymons ha desaparecido de tu inventario!!")
-                    print("No lo busques en el mercado negro (estará por piezas)")
-                    print("Siento tu pérdida")
-                else:
-                    print("Opción no válida")
-            elif jugador.digicoins < 10:
-                print("Dinero insuficiente")
-            else:
-                print("VUELVA PRONTO!!")    
-        elif opcion_casino == "4":
-            print("Gracias por jugar en el casino. ¡Hasta luego!")
-            break
-        else:
-            print("Opción no válida. Por favor, elige 1, 2 o 3.")
-
-#TODO ============================= FUNCION VENDER DIGIYMON ======================================
-def vender_digipymon(jugador):
-    # Muestra los Digipymons disponibles para vender.
-    print("Digipymons disponibles:")
-    
-    # Comprueba si el jugador tiene Digipymons en su lista.
-    if not jugador.lista_digipymon:
-        print("No tienes Digipymons para vender.")
-        return
-    
-    # Imprime todos los Digipymons con sus respectivas estadísticas de vida.
-    for i, digipymon in enumerate(jugador.lista_digipymon):
-        print(f"{i+1}. {digipymon.nombre}, vida: {digipymon.vida}")
-        
-    # Solicita al jugador que elija el número del Digipymon que desea vender.
-    seleccion_digipymon = int(input("Elige el número del Digipymon al que deseas vender: ")) - 1
-    
-    # Verifica si la selección del jugador es válida.
-    if 0 <= seleccion_digipymon < len(jugador.lista_digipymon):
-        
-        # Pregunta al jugador cómo quiere vender el Digipymon (por partes o entero).
-        metodo_venta = input("\n¿Cómo quieres venderlo?\n1. Por partes\n2. Entero\n")
-        
-        # Si el jugador elige vender por partes:
-        if metodo_venta == "1":
-            # Solicita al jugador que elija qué parte del Digipymon quiere vender.
-            print("\n¿Qué parte quieres vender?")
-            print("1. Brazo (Perderá daño a cambio de dinero)")
-            print("2. Pierna (Perderá vida a cambio de dinero)")
-            print("3. Cola (Perderá daño y vida a cambio de mucho dinero)")
-            print("")
-            parte = input()
-            
-            # Si el jugador elige vender el brazo:
-            if parte == "1":
-                # Calcula el dinero a recibir y actualiza las estadísticas del Digipymon.
-                ataque_anterior = jugador.lista_digipymon[seleccion_digipymon].ataque
-                jugador.lista_digipymon[seleccion_digipymon].ataque = round(ataque_anterior / 2)
-                dinero = round(ataque_anterior / 2)
-                jugador.digicoins += dinero
-                
-                # Muestra mensajes sobre la transacción.
-                print(f"Tu Digipymon ha perdido puntos de ataque (antes: {ataque_anterior}, ahora: {jugador.lista_digipymon[seleccion_digipymon].ataque}).")
-                print(f"Has ganado {dinero} Digicoins.")
-                print(f"Tus Digicoins totales ahora son: {jugador.digicoins}")
-                print(f"Has vendido el brazo de {jugador.lista_digipymon[seleccion_digipymon].nombre}.")
-                
-            # Si el jugador elige vender la pierna:
-            elif parte == "2":
-                # Calcula el dinero a recibir y actualiza las estadísticas del Digipymon.
-                vida_anterior = jugador.lista_digipymon[seleccion_digipymon].vida
-                jugador.lista_digipymon[seleccion_digipymon].vida = round(vida_anterior / 2)
-                dinero = round(vida_anterior / 3)
-                jugador.digicoins += dinero
-    
-                # Muestra mensajes sobre la transacción.
-                print(f"Tu Digipymon ha perdido puntos de vida (antes: {vida_anterior}, ahora: {jugador.lista_digipymon[seleccion_digipymon].vida}).")
-                print(f"Has ganado {dinero} Digicoins.")
-                print(f"Tus Digicoins totales ahora son: {jugador.digicoins}")
-                print(f"Has vendido la pata de {jugador.lista_digipymon[seleccion_digipymon].nombre}.")
-                
-            # Si el jugador elige vender la cola:
-            elif parte == "3":
-                # Calcula el dinero a recibir y actualiza las estadísticas del Digipymon.
-                ataque_anterior = jugador.lista_digipymon[seleccion_digipymon].ataque
-                jugador.lista_digipymon[seleccion_digipymon].ataque = round(ataque_anterior / 2)
-                vida_anterior = jugador.lista_digipymon[seleccion_digipymon].vida
-                jugador.lista_digipymon[seleccion_digipymon].vida = round(vida_anterior / 2)
-                dinero = round(vida_anterior / 3 + ataque_anterior / 2)
-                jugador.digicoins += dinero
-    
-                # Muestra mensajes sobre la transacción.
-                print(f"Tu Digipymon ha perdido puntos de vida y ataque.")
-                print(f"Has ganado {dinero} Digicoins.")
-                print(f"Tus Digicoins totales ahora son: {jugador.digicoins}")
-                print(f"Has vendido la cola de {jugador.lista_digipymon[seleccion_digipymon].nombre}.")
-                
-            else:
-                # Si el jugador elige una opción no válida, muestra un mensaje de error.
-                print("Opción no válida.")
-                
-        # Si el jugador elige vender el Digipymon entero:
-        elif metodo_venta == "2":
-            # Calcula el dinero a recibir y elimina el Digipymon de la lista del jugador.
-            vida_dinero = jugador.lista_digipymon[seleccion_digipymon].vida
-            ataque_dinero = jugador.lista_digipymon[seleccion_digipymon].ataque
-            nivel_dinero = jugador.lista_digipymon[seleccion_digipymon].nivel
-            dinero = vida_dinero + ataque_dinero + nivel_dinero
-                
-            jugador.digicoins += dinero
-                
-            jugador.lista_digipymon.pop(seleccion_digipymon)
-                
-            # Muestra mensajes sobre la transacción.
-            print(f"Has ganado {vida_dinero} por la vida")
-            print(f"Has ganado {ataque_dinero} por el ataque")
-            print(f"Has ganado {nivel_dinero} por el nivel")
-            print(f"En total has ganado {dinero} Digicoins")
-                
-        else:
-            # Si el jugador elige una opción no válida, muestra un mensaje de error.
-            print("Opción no válida.")
-                
-    else:
-        # Si el jugador elige un número de Digipymon no válido, muestra un mensaje de error.
-        print("Número de Digipymon seleccionado no válido.")
-
 #TODO ==================================  FUNCION MAIN  ==========================================
 def main():
     jugador = Jugador("*")  # Crear una instancia de Jugador
     inventario = Inventario()  # Crear una instancia de Inventario
     enemigo = Enemigo()  # Crear una instancia de Enemigo
     contador_peleas = [0]  # Inicializar un contador de peleas
-
-
+    casino = Casino()
+    vender = VenderDigipymon()
     # Limpiar la consola y solicitar el nombre del jugador
     os.system("cls")
     jugador.nombre = input("Bienvenido a Digipymmon!! ¿Cuál es tu nombre?\n").capitalize()
@@ -755,19 +473,7 @@ def main():
             print("** HAS RECIBIDO TU PRIMER DIGIPYMON **")
             print(digi_inicial)
             
-        print("")
-        print("ANTES DE IRME, EL MISTERIOSO SEÑOR HA DEJADO UNA BOLSA CON UNA NOTA:")
-        bolsa = input("¿Quieres leer la nota? (Si/No) ")
-        if bolsa == "si":
-            os.system("cls")
-            print("\nSiento las prisas pero tenía cosas que hacer, solo por si crees necesitarlo aquí te dejo algunas cosas...\n")
-            print("***   Has recibido 10 digicoins  ***")
-            print("***   Has recibido 3 balls       ***")
-            print("***   Has recibido 1 poción      ***")
-            inventario.añadir_objeto("balls", 3)
-            inventario.añadir_objeto("poción", 1)
-        else:
-            print("Te vas sin leer siquiera la nota.")
+
     else: 
         print("Oh, entiendo.\n Entonces dejémonos de rodeos.\n")
         print("Te daré un Digipymon con el que puedas empezar decentemente. ¡Te deseo mucha suerte!")
@@ -797,7 +503,6 @@ def main():
         print("Te vas sin leer si quiera la nota")
     # Continuamos con el bucle principal del juego
     while True:
-        #! Hacer el pelearse con un boss, si el contador llega a 10 un if en la opcion 2 hata que pelees contra el boss o un entrenador normal
         
         opcion = menu()
         
@@ -836,9 +541,9 @@ def main():
 
         elif opcion == 7:
             #Casino
-            casino(jugador)
+            casino.casino(jugador)
         elif opcion == 8:
-            vender_digipymon(jugador)
+            vender.vender_digipymon(jugador)
         elif opcion == 9:
             # Salir
             print("GRACIAS POR JUGAR!!")
