@@ -433,6 +433,7 @@ def main():
             digi_inicial_fuego = Digipymon("Flamagon", 10, 5, 1, "Fuego")
             digi_inicial_planta = Digipymon("Polivine", 10, 5, 1, "Planta")
             digi_inicial_agua = Digipymon("Aqualisk", 10, 5, 1, "Agua")
+            digi_inicial_especial = Digipymon("Overlord el devora mundos", 999, 999, 999, "Dragon")
             # Mostrar Digipymons iniciales disponibles
             print(digi_inicial_fuego,"\n" , digi_inicial_planta,"\n" , digi_inicial_agua)
             elige_digi = input("¿Cuál de estos Digipymons quieres? (1/2/3) ").lower()
