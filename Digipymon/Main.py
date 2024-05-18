@@ -12,7 +12,7 @@ from VenderDigipymon import VenderDigipymon
 def generar_digipymon_aleatorio():
     lista = ListaNombres()
     #Genera el tipo del digipymon de manera aleatoria del array
-    tipos = ["Planta", "Fuego", "Agua"]
+    tipos = ["Planta", "Fuego", "Agua", "Dragon","Electrico","Tierra","Bicho"]
     tipo_seleccionado = random.choice(tipos)
     
     # Genera un nombre aleatorio proveniente de la clase ListaNombres
